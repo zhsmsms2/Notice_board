@@ -1,0 +1,155 @@
+@charset "UTF-8";
+
+@font-face {
+	font-family:"Noto Sans KR";
+	src:url("/fonts/NotoSansKR-Regular.otf") format("opentype");
+}
+@font-face {
+	font-family:"Noto Sans KR";
+	src:url("/fonts/NotoSansKR-Bold.otf") format("opentype");
+}
+@font-face {
+    font-family: "Noto Sans KR";
+    src: url('/fonts/NotoSansKR-Medium.otf') format("opentype");
+}
+
+.font-style {
+	font: normal normal 500 18px/26px Noto Sans KR;
+}
+.font-style-2 {
+	font: normal normal normal 16px/24px Noto Sans KR;
+}
+<!--/* list-tap */-->
+.page-title {
+	text-align: left;
+	font: normal normal bold 24px/35px Noto Sans KR;
+	letter-spacing: 0px;
+	color: #191919;	
+}
+.search-form {
+	width: fit-content;
+	margin: 0 0 20px auto;
+	display: flex;
+	flex-direction: row;
+}
+.search-box {
+	width: 200px;
+	height: 44px;
+	padding: 16px;
+	border: 2px solid #B1B1B1;
+	border-right: none;
+	border-radius: 10px 0 0 10px;
+}
+.dropdown-btn {
+	border-top: 2px solid #B1B1B1;
+	border-left: none;
+	border-bottom: 2px solid #B1B1B1; 
+	border-right: none;
+	background-color: #FFFFFF;
+}
+.search-btn {
+	border: 2px solid #B1B1B1;
+	background-color: #FFF;
+	border-radius: 0 10px 10px 0;
+}
+.inner-form {
+	width: 250px;
+	display: flex;
+	flex-direction: column;
+}
+.menu-item {
+	margin-bottom: 20px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between; 
+	align-items: center;
+}
+.notice_table {
+	width: 100%;
+	border-top: 2px solid #AEAEAE;
+	border-bottom: 2px solid #AEAEAE;
+	border-spacing: 0;
+	margin-bottom: 20px;
+}
+
+.notice_table > tbody > tr {
+	height: 66px;
+	border-bottom: 2px solid #ECECEC;
+}
+
+.notice_table > tbody > tr:last-child {
+	border-bottom: none;
+}
+
+.btn-bottom-area {
+	margin-bottom: 100px;
+}
+<!--/* write-tap */-->
+.write-form {
+	border-top: 2px solid #AEAEAE;
+	border-bottom: 2px solid #AEAEAE;
+	padding: 28px 0 20px;
+	margin-bottom: 20px;
+}
+.form-style {
+	margin-bottom: 20px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-btween;
+}
+
+.label-text {
+	margin-top: 16px;
+	text-align: left;
+	font: normal normal 500 16px/24px Noto Sans KR;
+	letter-spacing: 0px;
+	color: #191919;	
+}
+
+.form-text-box {
+	width: 890px;
+	height: 56px;
+	border: 1px solid #DBDBDB;
+	border-radius: 10px;
+}
+
+.form-textarea-box {
+	width: 890px;
+	height: 431px;
+	border: 1px solid #DBDBDB;
+	border-radius: 10px;
+	resize: none;
+}
+::placeholder {
+	text-align: left;
+	font: normal normal normal 16px/24px Noto Sans KR;
+	letter-spacing: 0px;
+	color: #9A9A9A;
+}
+
+<!--/* view-tap */-->
+.notice-title {
+	text-align: left;
+	font: normal normal 500 18px/26px Noto Sans KR;
+	letter-spacing: 0px;
+	color: #232323;
+}
+.view-write-date {
+	text-align: left;
+	font: normal normal normal 14px/20px Noto Sans KR;
+	letter-spacing: 0px;
+	color: #7B7B7B;
+}
+.view-writer {
+	text-align: left;
+	font: normal normal 500 18px/26px Noto Sans KR;
+	letter-spacing: 0px;
+	color: #232323;
+}
+.view-content {
+	margin-top: 50px;
+	text-align: left;
+	font: normal normal normal 16px/24px Noto Sans KR;
+	letter-spacing: 0px;
+	color: #232323;	
+}

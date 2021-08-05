@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="board/layout/basic">
+	<th:block layout:fragment="title">
+		<title>This page is a list page</title>
+	</th:block>
+	
+	
+	
+	<th:block layout:fragment="content">
+		
+		<div class="table-responsive clearfix">
+			<th:block layout:fragment="search">
+				<div th:replace="board/fragments/Common :: search"></div>
+			</th:block>
+			<table class="notice_table">
+				<tbody>
+					<tr th:if="${not #lists.isEmpty( boardList )}" th:each="row : ${boardList}">
+						<td class="text-left">
+							<a th:href="|@{/board/view.do}${params.makeQueryString(params.currentPageNo)}&n_idx=${row.n_idx}|" th:text="${row.n_title}" style="color: #191919; text-decoration: none;  font: normal normal normal 18px/26px Noto Sans KR; letter-spacing: 0px;"></a>
+						</td>
+						<td th:text="${#temporals.format( row.insertTime, 'yyyy-MM-dd' )}" style="text-align: right; font: normal normal normal 16px/24px Noto Sans KR; letter-spacing: 0px; color: #9A9A9A;"></td>
+					</tr>
+					<tr th:unless="${not #lists.isEmpty( boardList )}">
+						<td colspan="5">조회된 결과가 없습니다.</td>
+					</tr>
+				</tbody>
+			</table>
+			<th:block layout:fragment="paging">
+				<nav th:replace="board/fragments/Common :: pagination"></nav>
+			</th:block>
+			<div class="btn_wrap text-right" style="margin-bottom: 100px;">
+				<a th:href="@{/board/write.do}" class="btn btn-outline-primary waves-effect waves-light">글쓰기</a>
+			</div>
+		</div>
+	</th:block>
+	<th:block layout:fragment="script">
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+
+			function movePage(uri, queryString) {
+				location.href = uri + queryString;
+			}
+
+			function searchBoard(form) {
+				/*[- 드롭다운이 아닌 메인 검색 키워드로 검색했을 때 -]*/
+				if (isEmpty(form) == true) {
+					var searchKeyword = document.getElementById("mainSearchKeyword");
+					if (isEmpty(searchKeyword.value) == true) {
+						alert("키워드를 입력해 주세요.");
+						searchKeyword.focus();
+						return false;
+					}
+
+					form = document.getElementById("searchForm");
+					form.searchKeyword.value = searchKeyword.value;
+					form.submit();
+				}
+
+				if (isEmpty(form.searchKeyword.value) == true) {
+					alert("키워드를 입력해 주세요.");
+					form.searchKeyword.focus();
+					return false;
+				}
+			}
+			/*[- end of function -]*/
+
+			/*]]>*/
+		</script>
+	</th:block>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+	<nav th:fragment="pagination" th:if="${params != null and params.paginationInfo.totalRecordCount > 0}" th:object="${params.paginationInfo}" th:with="info=${params.paginationInfo}" aria-label="Page navigation" class="text-center">
+		<ul class="pagination justify-content-center">
+			<li th:if="*{hasPreviousPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(1)} ]])" class="page-item">
+				<a href="javascript:void(0)" aria-label="Previous" class="page-link">First</a>
+			</li>
+			<li th:if="*{hasPreviousPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.firstPage - 1)} ]])" class="page-item">
+				<a href="javascript:void(0)" aria-label="Previous" class="page-link">Previous</a>
+			</li>
+			<li th:each="pageNo : *{#numbers.sequence( firstPage, lastPage )}" th:class="${pageNo == params.currentPageNo} ? 'page-item active'">
+				<a href="javascript:void(0)" th:text="${pageNo}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(pageNo)} ]])" class="page-link"></a>
+			</li>
+			<li th:if="*{hasNextPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.lastPage + 1)} ]])" class="page-item">
+				<a href="javascript:void(0)" aria-label="Next" class="page-link">Next</a>
+			</li>
+			<li th:if="*{hasNextPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.totalPageCount)} ]])" class="page-item">
+				<a href="javascript:void(0)" aria-label="Next" class="page-link">Last</a>
+			</li>
+		</ul>
+	</nav>
+	
+	<div th:fragment="search" id="adv-search" class="search-form">
+		<div class="input-group">
+			<input type="text" id="mainSearchKeyword" class="search-box" th:value="${params.searchKeyword}" placeholder="키워드를 입력해 주세요." />
+			<button type="button" class="dropdown-btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+				<span class="visually-hidden">Toggle Dropdown</span>
+			</button>
+			<ul class="dropdown-menu dropdown-menu-end" style="padding: 10px;">
+		    	<li>
+		    		<form id="searchForm" th:action="@{/board/list.do}" method="get" th:onsubmit="return searchBoard(this)" class="form-horizontal inner-form" role="form">
+						<!-- /* 현재 페이지 번호, 페이지당 출력할 데이터 개수, 페이지 하단에 출력할 페이지 개수 Hidden 파라미터 */ -->
+						<input type="hidden" name="currentPageNo" value="1" />
+						<input type="hidden" name="recordsPerPage" th:value="${params.recordsPerPage}" />
+						<input type="hidden" name="pageSize" th:value="${params.pageSize}" />
+		
+						<div class="form-group menu-item">
+							<label for="filter" class="font-style-2">검색 유형</label>
+							<select name="searchType" class="form-control " style="width: 70%;">
+								<option value="" th:selected="${#strings.isEmpty( params.searchType )}">전체</option>
+								<option value="n_title" th:selected="${#strings.equals( params.searchType, 'n_title' )}">제목</option>
+								<option value="n_content" th:selected="${#strings.equals( params.searchType, 'n_content' )}">내용</option>
+								<option value="n_writer" th:selected="${#strings.equals( params.searchType, 'n_writer' )}">작성자</option>
+							</select>
+						</div>
+						<div class="form-group menu-item">
+							<label for="contain" class="font-style-2">키워드</label>
+							<input type="text" name="searchKeyword" class="form-control" th:value="${params.searchKeyword}" style="width: 70%;"/>
+						</div>
+						<button type="submit" class="btn btn-outline-secondary btn-sm" style="border-radius: 10px; width: 30%; margin: 0 auto;">Search<span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+					</form>
+		    	</li>
+		  	</ul>
+		  	<button type="button" class="search-btn" onclick="searchBoard(null)">Search<span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+		</div>
+	</div>
+</html>

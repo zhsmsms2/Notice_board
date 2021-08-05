@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.board.mapper.BoardMapper">
+
+	<sql id="boardColumns">
+		  n_idx
+		, n_title
+		, n_content
+		, n_writer
+		, delete_yn
+		, insert_time
+		, update_time
+		, delete_time
+		, reg_dt
+		, ref1
+		, n_file
+	</sql>
+
+	<insert id="insertBoard" parameterType="BoardDTO">
+		INSERT INTO t_notice (
+			<include refid="boardColumns" />
+		) VALUES (
+			  #{n_idx}
+			, #{n_title}
+			, #{n_content}
+			, #{n_writer}
+			, 'N'
+			, NOW()
+			, NULL
+			, NULL
+			, NULL
+			, NULL
+			, NULL
+		)
+	</insert>
+
+	<select id="selectBoardDetail" parameterType="long" resultType="BoardDTO">
+		SELECT
+			<include refid="boardColumns" />
+		FROM
+			t_notice
+		WHERE
+			delete_yn = 'N'
+		AND
+			n_idx = #{n_idx}
+	</select>
+
+	<update id="updateBoard" parameterType="BoardDTO">
+		UPDATE t_notice
+		SET
+			  update_time = NOW()
+			, n_title = #{n_title}
+			, n_content = #{n_content}
+			, n_writer = #{n_writer}
+		WHERE
+			n_idx = #{n_idx}
+	</update>
+
+	<update id="deleteBoard" parameterType="long">
+		UPDATE t_notice
+		SET
+			  delete_yn = 'Y'
+			, delete_time = NOW()
+		WHERE
+			n_idx = #{n_idx}
+	</update>
+
+	<select id="selectBoardList" parameterType="BoardDTO" resultType="BoardDTO">
+		SELECT
+			<include refid="boardColumns" />
+		FROM
+			t_notice
+		WHERE
+			delete_yn = 'N'
+		<include refid="CommonMapper.search"></include>
+		ORDER BY
+			n_idx DESC,
+			insert_time DESC
+		<include refid="CommonMapper.paging"></include>
+	</select>
+
+	<select id="selectBoardTotalCount" parameterType="BoardDTO" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			t_notice
+		WHERE
+			delete_yn = 'N'
+		<include refid="CommonMapper.search"></include>
+	</select>
+
+</mapper>
